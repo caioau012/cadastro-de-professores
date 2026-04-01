@@ -71,6 +71,11 @@
 			<version>${springdoc.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.dozermapper</groupId>
+			<artifactId>dozer-core</artifactId>
+			<version>${dozer.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
