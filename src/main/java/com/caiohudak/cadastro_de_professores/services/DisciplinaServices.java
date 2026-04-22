@@ -15,12 +15,13 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import com.caiohudak.cadasro_de_professores.controller.DisciplinaController;
 import com.caiohudak.cadastro_de_professores.dto.DisciplinaDTO;
 import com.caiohudak.cadastro_de_professores.entity.Disciplina;
+import com.caiohudak.cadastro_de_professores.exception.RequiredObjectIsNullException;
+import com.caiohudak.cadastro_de_professores.exception.ResourceNotFoundException;
 import com.caiohudak.cadastro_de_professores.mapper.custom.DisciplinaMapper;
 import com.caiohudak.cadastro_de_professores.repository.DisciplinaRepository;
-
-import controller.DisciplinaController;
 
 @Service
 public class DisciplinaServices {
@@ -74,7 +75,7 @@ public class DisciplinaServices {
 	public DisciplinaDTO update(DisciplinaDTO disciplina) {
 		if (disciplina==null) throw new RequiredObjectIsNullException();
 		logger.info("Atualizando uma disciplina");
-		Disciplina entity = repository.findById(disciplina.getId()).orElsehrow(()-> new ResourceNotFoundException("Nenhum dado encontrado para esse ID!"));
+		Disciplina entity = repository.findById(disciplina.getId()).orElseThrow(()-> new ResourceNotFoundException("Nenhum dado encontrado para esse ID!"));
 		
 		entity.setCodigo(disciplina.getCodigo());
 		entity.setTurno(disciplina.getTurno());
