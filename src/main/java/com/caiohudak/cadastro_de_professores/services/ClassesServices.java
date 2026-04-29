@@ -66,7 +66,35 @@ public class ClassesServices {
 		return dto;
 	}
 	
+	public ClassesDTO update(ClassesDTO classe) {
+		if (classe==null) throw new RequiredObjectIsNullException();
+		logger.info("Atualizando uma classe");
+		Classes entity = repository.findById(classe.getId()).orElseThrow(()-> new ResourceNotFoundException("Nenhum dado encontrado para esse ID!"));
+		
+		entity.setAnoDaTurma(classe.getAnoDaTurma());
+		entity.setNumeroAlunos(classe.getNumeroAlunos());
+		entity.setNumeroSala(classe.getNumeroSala());
+		
+		var dto = parseObject(repository.save(entity), ClasseDTO.class);
+		addHateoasLinks(dto);
+		return dto;
+	}
 	
+	public void delete(Long id) {
+		logger.info("Deletando uma classe!");
+		
+		Classes entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Nenhum dado encontrado para esse ID!"));
+		
+		repository.delete(entity);
+	}
+	
+	private void addHaetoasLinks (ClassesDTO dto) {
+		dto.add(linkTo(methodOn(ClassesController.class).findById(dto.getId())).withSelfRes().withType("GET"));
+		dto.add(linkTo(methodOn(ClassesController.class).findAll(0,12,"asc")).withRel("findAll").withType("GET"));
+		dto.add(linkTo(methodOn(ClassesController.class).create(dto)).withRel("create").withType("POST"));
+		dto.add(linkTo(methodOn(ClassesController.class).update(dto)).withRel("update").withType("PUT"));
+		dto.add(linkTo(methodOn(ClassesController.class).delete(dto.getId())).withRel("delte").withType("DELETE"));
+	}
 	
 	
 	
