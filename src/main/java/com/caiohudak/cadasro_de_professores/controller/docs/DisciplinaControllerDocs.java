@@ -19,7 +19,7 @@ public interface DisciplinaControllerDocs {
 	@Operation(summary = "Find A Disciplina", description = "Find a specific disciplina by your Id",  tags = "Disciplinas", responses = {
 			@ApiResponse(description = "Success", 
 					responseCode = "200", 
-					content = @Content(schema = @Schema(implementation = ProfessorDTO.class)))		,
+					content = @Content(schema = @Schema(implementation = ProfessorDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -48,7 +48,7 @@ public interface DisciplinaControllerDocs {
 			@RequestParam(value = "direction", defaultValue = "asc") String direction);
 
 	@Operation(summary = "Adds a new Disciplina",
-		    description = "Adds a new Disciplina by passing in a JSON, XML or YML representation of the book.",
+		    description = "Adds a new Disciplina by passing in a JSON, XML or YML representation of the disciplina.",
 		    tags = {"Disciplinas"},
 		    responses = {
 		            @ApiResponse(
@@ -64,7 +64,7 @@ public interface DisciplinaControllerDocs {
 	DisciplinaDTO create(DisciplinaDTO disciplina);
 
 	@Operation(summary = "Updates a disciplina's information",
-		    description = "Updates a disciplina's information by passing in a JSON, XML or YML representation of the updated book.",
+		    description = "Updates a disciplina's information by passing in a JSON, XML or YML representation of the updated classe.",
 		    tags = {"Disciplinas"},
 		    responses = {
 		            @ApiResponse(
