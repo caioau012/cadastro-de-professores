@@ -1,5 +1,9 @@
 package com.caiohudak.cadastro_de_professores.services;
 
+import static com.caiohudak.cadastro_de_professores.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import com.caiohudak.cadasro_de_professores.controller.ClassesController;
 import com.caiohudak.cadastro_de_professores.dto.ClassesDTO;
 import com.caiohudak.cadastro_de_professores.entity.Classes;
 import com.caiohudak.cadastro_de_professores.exception.RequiredObjectIsNullException;
@@ -41,7 +46,7 @@ public class ClassesServices {
 		return dto;});
 		
 		Link findAllLink = WebMvcLinkBuilder.linkTo(
-				WebMvcLinkBuilder.methodOn(ClasseController.class)
+				WebMvcLinkBuilder.methodOn(ClassesController.class)
 				.findAll(pageable.getPageNumber(), pageable.getPageSize(), String.valueOf(pageable.getSort()))).withSelfRel();
 		
 		return assembler.toModel(classesWithLinks, findAllLink);
@@ -75,7 +80,7 @@ public class ClassesServices {
 		entity.setNumeroAlunos(classe.getNumeroAlunos());
 		entity.setNumeroSala(classe.getNumeroSala());
 		
-		var dto = parseObject(repository.save(entity), ClasseDTO.class);
+		var dto = parseObject(repository.save(entity), ClassesDTO.class);
 		addHateoasLinks(dto);
 		return dto;
 	}
@@ -88,8 +93,8 @@ public class ClassesServices {
 		repository.delete(entity);
 	}
 	
-	private void addHaetoasLinks (ClassesDTO dto) {
-		dto.add(linkTo(methodOn(ClassesController.class).findById(dto.getId())).withSelfRes().withType("GET"));
+	private void addHateoasLinks (ClassesDTO dto) {
+		dto.add(linkTo(methodOn(ClassesController.class).findById(dto.getId())).withSelfRel().withType("GET"));
 		dto.add(linkTo(methodOn(ClassesController.class).findAll(0,12,"asc")).withRel("findAll").withType("GET"));
 		dto.add(linkTo(methodOn(ClassesController.class).create(dto)).withRel("create").withType("POST"));
 		dto.add(linkTo(methodOn(ClassesController.class).update(dto)).withRel("update").withType("PUT"));

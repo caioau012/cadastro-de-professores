@@ -51,7 +51,7 @@ public class ClassesController implements ClassesControllerDocs{
 	
 	@Override
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
-	public ClassesDTO create(@RequesBody ClassesDTO classes) {
+	public ClassesDTO create(@RequestBody ClassesDTO classes) {
 		return service.create(classes);
 	}
 	
